@@ -15,6 +15,6 @@ var (
 type cHello struct{}
 
 func (c *cHello) Hello(ctx context.Context, req *v1.HelloReq) (res *v1.HelloRes, err error) {
-	g.RequestFromCtx(ctx).Response.Writeln("Hello World!")
+	g.RequestFromCtx(ctx).Response.Writeln("Hello 世界!")
 	return
 }
