@@ -3,6 +3,7 @@ server:
   openapiPath: "/api.json"
   swaggerPath: "/redoc"
   graceful: true
+  gracefulTimeout: 10
 
 logger:
   level : "all"
