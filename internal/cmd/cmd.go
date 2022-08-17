@@ -23,6 +23,7 @@ var (
 					controller.Hello,
 				)
 			})
+			s.EnableAdmin()
 			s.Run()
 			return nil
 		},
