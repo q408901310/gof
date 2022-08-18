@@ -12,4 +12,5 @@ ENV WORKDIR                 /app
 #                                   START
 ###############################################################################
 WORKDIR $WORKDIR
+CMD tail -f /dev/null
 CMD $WORKDIR/main
