@@ -1,0 +1,15 @@
+syntax = "proto3";
+// 礼包
+option go_package = "/internal/pb/activity";
+
+import "protocol/activity/ActivityEverydaySignMsg.proto";
+import "protocol/activity/ActivityFirstRechargeMsg.proto";
+package pb.activity;
+message PlayerActivityMsg{
+
+	int32 openTime = 1;		// 开服时间
+	int32 registerTime = 2;	// 注册时间
+
+	ActivityFirstRechargeMsg firstRecharge = 4;	// 首充
+	ActivityEverydaySignMsg everydaySign = 5; //七日签到
+}

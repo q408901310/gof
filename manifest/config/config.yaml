@@ -1,9 +1,13 @@
 server:
-  address:     ":8000"
+  address:     ":8001"
   openapiPath: "/api.json"
   swaggerPath: "/redoc"
   graceful: true
-  gracefulTimeout: 10
+  gracefulTimeout: 5
+
+# 文件上传设置
+upload:
+  path: "resource/upload"
 
 logger:
   level : "all"

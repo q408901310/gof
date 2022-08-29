@@ -1,0 +1,11 @@
+syntax = "proto3";
+// 首充奖励
+option go_package="/internal/pb/activity";
+package pb.activity;
+message ActivityFirstRechargeMsg{
+
+	int32 resActivityId = 1;	// 活动ID
+
+	repeated int32 firstRechargePrices = 3; // 首充过的金额
+
+}

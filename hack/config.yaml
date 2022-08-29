@@ -4,7 +4,7 @@
 gfcli:
   build:
     name: "main"
-    path: "./bin"
-    arch: "amd64"
-    system: "linux"
-    packSrc: "resource,manifest/config"
+#    path: "./bin"
+#    arch: "amd64"
+#    system: "linux"
+    packSrc: "hack,manifest/config"

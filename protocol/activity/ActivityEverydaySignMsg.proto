@@ -1,0 +1,16 @@
+syntax = "proto3";
+// 首充奖励
+option go_package="/internal/pb/activity";
+package pb.activity;
+message ActivityEverydaySignMsg{
+
+	int32 resActivityId = 1;	// 活动ID
+
+	int32 receiveTime = 2; //领奖时间
+
+	int32 weekNum = 3; //签到周次
+
+	int32 times = 4; //此周次签到次数
+
+	int32 receiveDoubleTime = 5; //双倍领奖时间
+}

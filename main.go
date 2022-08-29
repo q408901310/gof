@@ -9,5 +9,15 @@ import (
 )
 
 func main() {
+	err := cmd.Main.AddCommand(&cmd.Restart)
+	if err != nil {
+		panic(err)
+	}
+	err = cmd.Main.AddObject(
+		cmd.Tpl,
+	)
+	if err != nil {
+		panic(err)
+	}
 	cmd.Main.Run(gctx.New())
 }
