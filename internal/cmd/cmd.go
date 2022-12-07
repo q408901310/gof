@@ -25,16 +25,27 @@ var (
 			}
 			s.AddStaticPath("/upload", uploadPath)
 
-			s.Use(ghttp.MiddlewareHandlerResponse)
 			s.Group("/", func(group *ghttp.RouterGroup) {
-				//group.Middleware(ghttp.MiddlewareHandlerResponse)
+				group.Middleware(ghttp.MiddlewareCORS, ghttp.MiddlewareHandlerResponse)
 				group.Bind(
-					//controller.Hello,
-					controller.Websocket,
+					controller.User,
 				)
-			})
 
-			//s.BindHandler("/ws", controller.Websocket.Start)
+				//登录后可访问
+				s.Group("/", func(group *ghttp.RouterGroup) {
+					group.Bind(
+						controller.Websocket,
+					)
+				})
+
+				//登录后可访问
+				s.Group("/", func(group *ghttp.RouterGroup) {
+					group.Middleware(service.Middleware().Auth)
+					group.Bind(
+						controller.Server,
+					)
+				})
+			})
 
 			//平滑重启
 			s.BindMiddleware("/debug/*", service.Middleware().Debug)

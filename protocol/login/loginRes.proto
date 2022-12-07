@@ -1,0 +1,12 @@
+syntax = "proto3";
+// 玩家登录应答
+option go_package = "/internal/pb";
+
+import "protocol/setting/SettingRes.proto";
+
+package pb.login;
+
+message LoginRes{
+
+  setting.SettingRes setting = 2;				// 系统设置
+}

@@ -23,14 +23,12 @@ var _ = math.Inf
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 type Msg struct {
-	PlayerId  int64  `protobuf:"varint,1,opt,name=playerId,proto3" json:"playerId,omitempty"`
-	Code      string `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"`
-	Sequence  int32  `protobuf:"varint,3,opt,name=sequence,proto3" json:"sequence,omitempty"`
-	ErrorCode int32  `protobuf:"varint,4,opt,name=errorCode,proto3" json:"errorCode,omitempty"`
-	Data      []byte `protobuf:"bytes,5,opt,name=data,proto3" json:"data,omitempty"`
-	//	DataMsg dataMsg = 6; //服务器端推送数据
-	SessionKey           string   `protobuf:"bytes,7,opt,name=sessionKey,proto3" json:"sessionKey,omitempty"`
-	SessionId            int32    `protobuf:"varint,8,opt,name=sessionId,proto3" json:"sessionId,omitempty"`
+	SessionId            string   `protobuf:"bytes,1,opt,name=sessionId,proto3" json:"sessionId,omitempty"`
+	Sequence             int32    `protobuf:"varint,2,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	Action               string   `protobuf:"bytes,3,opt,name=action,proto3" json:"action,omitempty"`
+	Code                 int32    `protobuf:"varint,4,opt,name=code,proto3" json:"code,omitempty"`
+	Data                 []byte   `protobuf:"bytes,5,opt,name=data,proto3" json:"data,omitempty"`
+	DataMsg              *DataMsg `protobuf:"bytes,6,opt,name=dataMsg,proto3" json:"dataMsg,omitempty"`
 	Version              int32    `protobuf:"varint,9,opt,name=version,proto3" json:"version,omitempty"`
 	TestMode             bool     `protobuf:"varint,10,opt,name=testMode,proto3" json:"testMode,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -71,16 +69,9 @@ func (m *Msg) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_Msg proto.InternalMessageInfo
 
-func (m *Msg) GetPlayerId() int64 {
+func (m *Msg) GetSessionId() string {
 	if m != nil {
-		return m.PlayerId
-	}
-	return 0
-}
-
-func (m *Msg) GetCode() string {
-	if m != nil {
-		return m.Code
+		return m.SessionId
 	}
 	return ""
 }
@@ -92,9 +83,16 @@ func (m *Msg) GetSequence() int32 {
 	return 0
 }
 
-func (m *Msg) GetErrorCode() int32 {
+func (m *Msg) GetAction() string {
 	if m != nil {
-		return m.ErrorCode
+		return m.Action
+	}
+	return ""
+}
+
+func (m *Msg) GetCode() int32 {
+	if m != nil {
+		return m.Code
 	}
 	return 0
 }
@@ -106,18 +104,11 @@ func (m *Msg) GetData() []byte {
 	return nil
 }
 
-func (m *Msg) GetSessionKey() string {
+func (m *Msg) GetDataMsg() *DataMsg {
 	if m != nil {
-		return m.SessionKey
+		return m.DataMsg
 	}
-	return ""
-}
-
-func (m *Msg) GetSessionId() int32 {
-	if m != nil {
-		return m.SessionId
-	}
-	return 0
+	return nil
 }
 
 func (m *Msg) GetVersion() int32 {
@@ -141,22 +132,23 @@ func init() {
 func init() { proto.RegisterFile("protocol/pbMsg.proto", fileDescriptor_209597918b002e16) }
 
 var fileDescriptor_209597918b002e16 = []byte{
-	// 240 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x4c, 0x90, 0x3d, 0x4e, 0x03, 0x31,
-	0x10, 0x85, 0x99, 0x6c, 0x42, 0x76, 0x47, 0xa9, 0x2c, 0x0a, 0x0b, 0x21, 0xcb, 0xa2, 0x72, 0x45,
-	0x0a, 0x6e, 0x00, 0x55, 0x84, 0xb6, 0x71, 0x49, 0xb7, 0x3f, 0xa3, 0x28, 0x52, 0xb4, 0x5e, 0x6c,
-	0x83, 0xb4, 0x37, 0xe1, 0x48, 0x94, 0x1c, 0x01, 0x2d, 0x87, 0xa0, 0x45, 0x63, 0xc0, 0xa4, 0x9b,
-	0xef, 0x8d, 0xfd, 0xe6, 0xe9, 0xe1, 0xc5, 0xe8, 0x5d, 0x74, 0x9d, 0x3b, 0x6e, 0xc7, 0xb6, 0x0e,
-	0xfb, 0x9b, 0x84, 0x62, 0x31, 0xb6, 0xd7, 0x5f, 0x80, 0x45, 0x1d, 0xf6, 0xe2, 0x12, 0xcb, 0xf1,
-	0xd8, 0x4c, 0xe4, 0x77, 0xbd, 0x04, 0x0d, 0xa6, 0xb0, 0x99, 0x85, 0xc0, 0x65, 0xe7, 0x7a, 0x92,
-	0x0b, 0x0d, 0xa6, 0xb2, 0x69, 0xe6, 0xf7, 0x81, 0x9e, 0x9e, 0x69, 0xe8, 0x48, 0x16, 0x1a, 0xcc,
-	0xca, 0x66, 0x16, 0x57, 0x58, 0x91, 0xf7, 0xce, 0xdf, 0xf3, 0xa7, 0x65, 0x5a, 0xfe, 0x0b, 0xec,
-	0xd6, 0x37, 0xb1, 0x91, 0x2b, 0x0d, 0x66, 0x63, 0xd3, 0x2c, 0x14, 0x62, 0xa0, 0x10, 0x0e, 0x6e,
-	0x78, 0xa0, 0x49, 0xae, 0xd3, 0x9d, 0x13, 0x85, 0x1d, 0x7f, 0x69, 0xd7, 0xcb, 0xf2, 0xc7, 0x31,
-	0x0b, 0x42, 0xe2, 0xfa, 0x85, 0x3c, 0x83, 0xac, 0xd2, 0xee, 0x0f, 0x39, 0x65, 0xa4, 0x10, 0x6b,
-	0x0e, 0x82, 0x1a, 0x4c, 0x69, 0x33, 0xdf, 0xa9, 0xb7, 0x59, 0xc1, 0xfb, 0xac, 0xe0, 0x63, 0x56,
-	0xf0, 0xfa, 0xa9, 0xce, 0x1e, 0x37, 0xdb, 0xc3, 0x10, 0xc9, 0x0f, 0x0d, 0xd7, 0xd4, 0x9e, 0xa7,
-	0x92, 0x6e, 0xbf, 0x03, 0x00, 0x00, 0xff, 0xff, 0x87, 0x7a, 0xed, 0xb7, 0x3c, 0x01, 0x00, 0x00,
+	// 242 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x44, 0x90, 0x4d, 0x4a, 0x04, 0x31,
+	0x10, 0x85, 0xad, 0xf9, 0xe9, 0x99, 0xae, 0x99, 0x55, 0x90, 0xa1, 0x18, 0x24, 0x04, 0x41, 0xc8,
+	0xaa, 0x07, 0xf4, 0x06, 0xe2, 0xc6, 0x45, 0x6f, 0xb2, 0x74, 0xd7, 0x3f, 0xc5, 0xd0, 0x20, 0x49,
+	0xdb, 0x89, 0x9e, 0xc5, 0x23, 0xb9, 0xf4, 0x00, 0x2e, 0xa4, 0xbd, 0x88, 0x24, 0xce, 0xb4, 0xbb,
+	0xfa, 0xde, 0x4b, 0xaa, 0x1e, 0x0f, 0x2f, 0xfb, 0xc1, 0x05, 0xd7, 0xb8, 0xe7, 0x43, 0x5f, 0x97,
+	0xfe, 0x58, 0x24, 0x14, 0xb3, 0xbe, 0xde, 0xef, 0x26, 0xa7, 0xad, 0x42, 0x35, 0x79, 0xd7, 0x5f,
+	0x80, 0xf3, 0xd2, 0x1f, 0xc5, 0x15, 0xe6, 0x9e, 0xbd, 0xef, 0x9c, 0x7d, 0x6c, 0x09, 0x14, 0xe8,
+	0xdc, 0xfc, 0x0b, 0x62, 0x8f, 0x6b, 0xcf, 0x2f, 0xaf, 0x6c, 0x1b, 0xa6, 0x99, 0x02, 0xbd, 0x34,
+	0x13, 0x8b, 0x1d, 0x66, 0x55, 0x13, 0x3a, 0x67, 0x69, 0x9e, 0xbe, 0x9d, 0x48, 0x08, 0x5c, 0x34,
+	0xae, 0x65, 0x5a, 0xa4, 0xf7, 0x69, 0x8e, 0x5a, 0x3c, 0x4f, 0x4b, 0x05, 0x7a, 0x6b, 0xd2, 0x2c,
+	0x6e, 0x70, 0x75, 0x8a, 0x44, 0x99, 0x02, 0xbd, 0xb9, 0xdd, 0x14, 0x7d, 0x5d, 0x3c, 0xfc, 0x49,
+	0xe6, 0xec, 0x09, 0xc2, 0xd5, 0x1b, 0x0f, 0x31, 0x0f, 0xe5, 0x69, 0xe3, 0x19, 0x63, 0xb8, 0xc0,
+	0x3e, 0x94, 0xf1, 0x18, 0x2a, 0xd0, 0x6b, 0x33, 0xf1, 0xbd, 0xfc, 0x18, 0x25, 0x7c, 0x8e, 0x12,
+	0xbe, 0x47, 0x09, 0xef, 0x3f, 0xf2, 0xe2, 0x69, 0x7b, 0xe8, 0x6c, 0xe0, 0xc1, 0x56, 0xb1, 0xa3,
+	0x3a, 0x4b, 0x2d, 0xdc, 0xfd, 0x06, 0x00, 0x00, 0xff, 0xff, 0x6e, 0x15, 0x6e, 0xc0, 0x39, 0x01,
+	0x00, 0x00,
 }
 
 func (m *Msg) Marshal() (dAtA []byte, err error) {
@@ -198,17 +190,17 @@ func (m *Msg) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x48
 	}
-	if m.SessionId != 0 {
-		i = encodeVarintPbMsg(dAtA, i, uint64(m.SessionId))
+	if m.DataMsg != nil {
+		{
+			size, err := m.DataMsg.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintPbMsg(dAtA, i, uint64(size))
+		}
 		i--
-		dAtA[i] = 0x40
-	}
-	if len(m.SessionKey) > 0 {
-		i -= len(m.SessionKey)
-		copy(dAtA[i:], m.SessionKey)
-		i = encodeVarintPbMsg(dAtA, i, uint64(len(m.SessionKey)))
-		i--
-		dAtA[i] = 0x3a
+		dAtA[i] = 0x32
 	}
 	if len(m.Data) > 0 {
 		i -= len(m.Data)
@@ -217,27 +209,29 @@ func (m *Msg) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x2a
 	}
-	if m.ErrorCode != 0 {
-		i = encodeVarintPbMsg(dAtA, i, uint64(m.ErrorCode))
+	if m.Code != 0 {
+		i = encodeVarintPbMsg(dAtA, i, uint64(m.Code))
 		i--
 		dAtA[i] = 0x20
+	}
+	if len(m.Action) > 0 {
+		i -= len(m.Action)
+		copy(dAtA[i:], m.Action)
+		i = encodeVarintPbMsg(dAtA, i, uint64(len(m.Action)))
+		i--
+		dAtA[i] = 0x1a
 	}
 	if m.Sequence != 0 {
 		i = encodeVarintPbMsg(dAtA, i, uint64(m.Sequence))
 		i--
-		dAtA[i] = 0x18
+		dAtA[i] = 0x10
 	}
-	if len(m.Code) > 0 {
-		i -= len(m.Code)
-		copy(dAtA[i:], m.Code)
-		i = encodeVarintPbMsg(dAtA, i, uint64(len(m.Code)))
+	if len(m.SessionId) > 0 {
+		i -= len(m.SessionId)
+		copy(dAtA[i:], m.SessionId)
+		i = encodeVarintPbMsg(dAtA, i, uint64(len(m.SessionId)))
 		i--
-		dAtA[i] = 0x12
-	}
-	if m.PlayerId != 0 {
-		i = encodeVarintPbMsg(dAtA, i, uint64(m.PlayerId))
-		i--
-		dAtA[i] = 0x8
+		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
@@ -259,29 +253,27 @@ func (m *Msg) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.PlayerId != 0 {
-		n += 1 + sovPbMsg(uint64(m.PlayerId))
-	}
-	l = len(m.Code)
+	l = len(m.SessionId)
 	if l > 0 {
 		n += 1 + l + sovPbMsg(uint64(l))
 	}
 	if m.Sequence != 0 {
 		n += 1 + sovPbMsg(uint64(m.Sequence))
 	}
-	if m.ErrorCode != 0 {
-		n += 1 + sovPbMsg(uint64(m.ErrorCode))
+	l = len(m.Action)
+	if l > 0 {
+		n += 1 + l + sovPbMsg(uint64(l))
+	}
+	if m.Code != 0 {
+		n += 1 + sovPbMsg(uint64(m.Code))
 	}
 	l = len(m.Data)
 	if l > 0 {
 		n += 1 + l + sovPbMsg(uint64(l))
 	}
-	l = len(m.SessionKey)
-	if l > 0 {
+	if m.DataMsg != nil {
+		l = m.DataMsg.Size()
 		n += 1 + l + sovPbMsg(uint64(l))
-	}
-	if m.SessionId != 0 {
-		n += 1 + sovPbMsg(uint64(m.SessionId))
 	}
 	if m.Version != 0 {
 		n += 1 + sovPbMsg(uint64(m.Version))
@@ -331,27 +323,8 @@ func (m *Msg) Unmarshal(dAtA []byte) error {
 		}
 		switch fieldNum {
 		case 1:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field PlayerId", wireType)
-			}
-			m.PlayerId = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowPbMsg
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.PlayerId |= int64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Code", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field SessionId", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -379,9 +352,9 @@ func (m *Msg) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Code = string(dAtA[iNdEx:postIndex])
+			m.SessionId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 3:
+		case 2:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Sequence", wireType)
 			}
@@ -400,11 +373,11 @@ func (m *Msg) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-		case 4:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ErrorCode", wireType)
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Action", wireType)
 			}
-			m.ErrorCode = 0
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowPbMsg
@@ -414,7 +387,39 @@ func (m *Msg) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ErrorCode |= int32(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPbMsg
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPbMsg
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Action = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Code", wireType)
+			}
+			m.Code = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPbMsg
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Code |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -453,11 +458,11 @@ func (m *Msg) Unmarshal(dAtA []byte) error {
 				m.Data = []byte{}
 			}
 			iNdEx = postIndex
-		case 7:
+		case 6:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field SessionKey", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field DataMsg", wireType)
 			}
-			var stringLen uint64
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowPbMsg
@@ -467,43 +472,28 @@ func (m *Msg) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if msglen < 0 {
 				return ErrInvalidLengthPbMsg
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + msglen
 			if postIndex < 0 {
 				return ErrInvalidLengthPbMsg
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.SessionKey = string(dAtA[iNdEx:postIndex])
+			if m.DataMsg == nil {
+				m.DataMsg = &DataMsg{}
+			}
+			if err := m.DataMsg.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
-		case 8:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field SessionId", wireType)
-			}
-			m.SessionId = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowPbMsg
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.SessionId |= int32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
 		case 9:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Version", wireType)

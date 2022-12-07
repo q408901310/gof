@@ -8,3 +8,7 @@ gfcli:
 #    arch: "amd64"
 #    system: "linux"
     packSrc: "hack,manifest/config"
+
+database:
+  default:
+    link: "mysql:root:@tcp(127.0.0.1:3306)/mgxx_server"

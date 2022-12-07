@@ -1,0 +1,10 @@
+syntax = "proto3";
+//推送数据信息
+option go_package = "/internal/pb";
+
+package pb.player;
+
+message PlayerDataMsg{
+  int64 playerId = 1; //玩家ID
+
+}

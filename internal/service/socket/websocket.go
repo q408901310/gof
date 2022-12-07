@@ -1,10 +1,10 @@
-package service
+package socket
 
 import (
 	"context"
-	"gof/internal/pb"
-
 	"github.com/gogo/protobuf/proto"
+	"gof/internal/action"
+	"gof/internal/pb"
 
 	"github.com/gogf/gf/v2/net/ghttp"
 
@@ -35,12 +35,12 @@ func Websocket() *sWebsocket {
 	return &insWebsocket
 }
 
-func (s *sWebsocket) Start(ctx context.Context) (err error) {
+func (s *sWebsocket) Connect(ctx context.Context) (err error) {
 	var (
 		r       = g.RequestFromCtx(ctx)
 		ws      *ghttp.WebSocket
 		msgByte []byte
-		msg     *pb.Msg
+		msg     pb.Msg
 	)
 
 	if ws, err = r.WebSocket(); err != nil {
@@ -60,14 +60,26 @@ func (s *sWebsocket) Start(ctx context.Context) (err error) {
 		if err != nil {
 			// Remove session info.
 			s.clientMap.Remove(ws)
-			return nil
+			continue
 		}
-		err := proto.Unmarshal(msgByte, msg)
+		err = proto.Unmarshal(msgByte, &msg)
 		if err != nil {
-			return err
+			s.sendErrorMessage(c, msg.Action, pb.Code_SYS_PARAMETER)
+			continue
 		}
-		g.Dump(msg)
+		//msg.SessionId
+		act, ok := action.Action[msg.Action]
+		if !ok {
+			s.sendErrorMessage(c, msg.Action, pb.Code_SYS_ACTION)
+		}
+		//停服维护中 todo
+		g.Dump(act)
+		//act
 	}
+}
+
+func (s *sWebsocket) sendErrorMessage(c *client, action string, code pb.Code) {
+	//msg = Message().BuildMsg(action, code)
 }
 
 func (s *sWebsocket) Close(ws *ghttp.WebSocket) {

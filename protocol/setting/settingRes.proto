@@ -1,0 +1,12 @@
+syntax = "proto3";
+// 设置
+option go_package = "/internal/pb";
+
+package pb.setting;
+message SettingRes{
+  bool editName = 1;			// 修改名字（true、修改过）
+  bool editSex = 2;			// 修改性别（true、修改过）
+  bool bgm = 3;				// 背景音乐
+  bool musicEffect = 4;		// 音效
+  bool push = 5;		// 是否推送
+}

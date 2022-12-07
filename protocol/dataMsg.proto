@@ -1,0 +1,11 @@
+syntax = "proto3";
+//推送数据信息
+option go_package = "/internal/pb";
+
+import 'protocol/player/playerDataMsg.proto';
+
+package pb;
+message DataMsg{
+  pb.player.PlayerDataMsg playerDataMsg = 1; //玩家数据
+
+}

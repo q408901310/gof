@@ -20,7 +20,7 @@ func Middleware() *sMiddleware {
 	return &insMiddleware
 }
 
-// Debug 前台系统权限控制，用户必须登录才能访问
+// Debug 后台系统权限控制，用户必须登录才能访问
 func (s *sMiddleware) Debug(r *ghttp.Request) {
 	g.Dump(r.Session.Id())
 	token := r.Get("token")
@@ -34,11 +34,9 @@ func (s *sMiddleware) Debug(r *ghttp.Request) {
 
 // Auth 前台系统权限控制，用户必须登录才能访问
 func (s *sMiddleware) Auth(r *ghttp.Request) {
-	token := r.Get("token")
-	if token.String() == "123456" {
-		r.Middleware.Next()
-	} else {
-		r.Response.WriteStatusExit(http.StatusForbidden)
+	user := User().GetUser(r.Context())
+	if user.Id == 0 {
+		r.Response.WriteJsonExit(http.StatusNotFound)
 	}
 	r.Middleware.Next()
 }

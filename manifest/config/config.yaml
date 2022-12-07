@@ -13,5 +13,9 @@ logger:
   level : "all"
   stdout: true
 
+database:
+  default:
+   - link: "mysql:root:@tcp(127.0.0.1:3306)/mgxx_server"
+
 
 

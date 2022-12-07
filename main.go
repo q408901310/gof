@@ -3,9 +3,11 @@ package main
 import (
 	_ "gof/internal/packed"
 
+	"gof/internal/cmd"
+
 	"github.com/gogf/gf/v2/os/gctx"
 
-	"gof/internal/cmd"
+	_ "github.com/gogf/gf/contrib/drivers/mysql/v2"
 )
 
 func main() {

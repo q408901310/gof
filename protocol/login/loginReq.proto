@@ -1,0 +1,37 @@
+syntax = "proto3";
+// 玩家登录请求协议
+option go_package = "/internal/pb";
+
+package pb.login;
+
+message LoginReq{
+  string passport = 1;		//用户名
+  string name = 2;		//用户昵称
+  int32 channelId = 3;	//渠道号(0:无  2:微信 )
+  int32 sex = 4;			//取不到性别的平台必须要传性别
+  string sign = 5;		//校验合法性，微信等校验ID是否被模拟
+  int32 timestamp = 6;	//微信校验时候有效
+  int32 loginType = 7;	//登录类型1、微信公众号 2、QQ 3、微博 4、微信
+  string fromData = 8;	// 统计使用（纵横非仙关联账号）
+  bool subscribe = 9;		// 是否关注微信公众号
+
+  // 统计相关
+  string imei = 20;	// IMEI
+  string deviceModel = 21; //设备型号
+  string osName = 22;//操作系统
+  string osVer = 23 ;//操作系统版本
+  string macAddr = 24 ;//设备mac地址
+  int32  deviceHeight = 25;//屏幕高度
+  int32  deviceWidth = 26 ;//屏幕宽度
+  string isp = 27 ;//网络运营商
+  string network = 28;//网络连接,有  3g, 2.5g, 4g, wifi几种
+  string root = 29;	//IOS设备是否越狱，安卓设备是否root,1表示是，0表示不是
+
+  // 邀请进入
+  string friendOpenId = 30;	// 邀请玩家openId
+  int32 shareZone = 33; 		// 邀请玩家的分区，从哪个分区邀请的被邀请人直接进入对应的分区
+
+  // loadingGame
+  int32 loadingGameMoney = 34;		// 小游戏金钱奖励
+
+}

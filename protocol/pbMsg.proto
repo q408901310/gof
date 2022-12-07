@@ -2,16 +2,16 @@ syntax = "proto3";
 //客户端请求以及服务端响应数据协议
 option go_package = "/internal/pb";
 
+import 'protocol/dataMsg.proto';
+
 package pb;
 message Msg{
-	int64 playerId = 1; //玩家id
-	string code = 2; //操作码id
-	int32 sequence = 3; //请求序列(>0表示为客户端请求的命令 =0则为服务器端推送的命令)
-	int32 errorCode = 4;//错误码(0表示没有错误,不为0则解析data域为ErrorMsg)
+	string sessionId = 1; //请求的校验码
+	int32 sequence = 2; //请求序列(>0表示为客户端请求的命令 =0则为服务器端推送的命令)
+	string action = 3; //操作码id
+	int32 code = 4;//错误码(0表示没有错误,不为0则解析data域为ErrorMsg)
 	bytes data = 5; //提交或响应的数据
-//	DataMsg dataMsg = 6; //服务器端推送数据
-	string sessionKey = 7; //请求的校验码
-	int32 sessionId = 8;//当前请求的标示
+	DataMsg dataMsg = 6; //服务器端推送数据
 	int32 version = 9;// 当前客户端版本号
 	bool testMode = 10;//test运行时候返回和websocket不一样
 }
