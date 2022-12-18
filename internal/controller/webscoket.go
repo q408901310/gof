@@ -3,7 +3,7 @@ package controller
 import (
 	"context"
 	v1 "gof/api/v1"
-	"gof/internal/service/socket"
+	"gof/internal/service"
 )
 
 type cWebsocket struct{}
@@ -13,6 +13,6 @@ var (
 )
 
 func (c *cWebsocket) Websocket(ctx context.Context, req *v1.WebsocketReq) (res *v1.WebsocketRes, err error) {
-	err = socket.Websocket().Connect(ctx)
+	err = service.Websocket().Connect(ctx)
 	return
 }

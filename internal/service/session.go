@@ -2,7 +2,8 @@ package service
 
 import (
 	"context"
-	"gof/internal/model"
+	"github.com/gogf/gf/v2/frame/g"
+	"gof/internal/consts"
 	"gof/internal/model/entity"
 )
 
@@ -25,8 +26,26 @@ func Session() *sSession {
 }
 
 // 设置用户Session.
-func (s *sSession) SetUser(ctx context.Context, user *entity.User) error {
-	return BizCtx().Get(ctx).Session.Set(sessionKeyUser, user)
+func (s *sSession) SetUser(ctx context.Context, user *entity.User) (sessionId string, err error) {
+	r := g.RequestFromCtx(ctx)
+	if err = r.Session.Set(consts.UserSessionKey, user); err != nil {
+		return
+	}
+	sessionId = r.Session.MustId()
+	return
+}
+
+// 获取当前登录的用户信息对象，如果用户未登录返回nil。
+func (s *sSession) GetUserBySessionId(ctx context.Context, sessionId string) *entity.User {
+	r := g.RequestFromCtx(ctx)
+	_ = r.Session.SetId(sessionId)
+	v, _ := r.Session.Get(consts.UserSessionKey)
+	if !v.IsNil() {
+		var user *entity.User
+		_ = v.Struct(&user)
+		return user
+	}
+	return nil
 }
 
 // 获取当前登录的用户信息对象，如果用户未登录返回nil。
@@ -52,66 +71,6 @@ func (s *sSession) RemoveUser(ctx context.Context) error {
 	return nil
 }
 
-// 设置LoginReferer.
-func (s *sSession) SetLoginReferer(ctx context.Context, referer string) error {
-	if s.GetLoginReferer(ctx) == "" {
-		customCtx := BizCtx().Get(ctx)
-		if customCtx != nil {
-			return customCtx.Session.Set(sessionKeyLoginReferer, referer)
-		}
-	}
-	return nil
-}
-
-// 获取LoginReferer.
-func (s *sSession) GetLoginReferer(ctx context.Context) string {
-	customCtx := BizCtx().Get(ctx)
-	if customCtx != nil {
-		return customCtx.Session.MustGet(sessionKeyLoginReferer).String()
-	}
-	return ""
-}
-
-// 删除LoginReferer.
-func (s *sSession) RemoveLoginReferer(ctx context.Context) error {
-	customCtx := BizCtx().Get(ctx)
-	if customCtx != nil {
-		return customCtx.Session.Remove(sessionKeyLoginReferer)
-	}
-	return nil
-}
-
-// 设置Notice
-func (s *sSession) SetNotice(ctx context.Context, message *model.SessionNotice) error {
-	customCtx := BizCtx().Get(ctx)
-	if customCtx != nil {
-		return customCtx.Session.Set(sessionKeyNotice, message)
-	}
-	return nil
-}
-
-// 获取Notice
-func (s *sSession) GetNotice(ctx context.Context) (*model.SessionNotice, error) {
-	customCtx := BizCtx().Get(ctx)
-	if customCtx != nil {
-		var message *model.SessionNotice
-		v, err := customCtx.Session.Get(sessionKeyNotice)
-		if err != nil {
-			return nil, err
-		}
-		if err = v.Scan(&message); err != nil {
-			return nil, err
-		}
-		return message, nil
-	}
-	return nil, nil
-}
-
-// 删除Notice
-func (s *sSession) RemoveNotice(ctx context.Context) error {
-	customCtx := BizCtx().Get(ctx)
-	if customCtx != nil {
-		return customCtx.Session.Remove(sessionKeyNotice)
-	}
-	return nil
+func (s *sSession) SetSessionId(ctx context.Context, id string) error {
+	return g.RequestFromCtx(ctx).Session.SetId(id)
 }

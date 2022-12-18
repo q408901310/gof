@@ -4,33 +4,34 @@ option go_package = "/internal/pb";
 
 package pb;
 
-enum Code{
+enum CODE{
 
   SUCCESS = 0 ;
   //-----------------系统相关错误码----------------------------
   SYS_SYSTEM = 1;						//系统异常
   SYS_UNKNOWN = 2; 					//未知错误
-  SYS_PARAMETER = 3; 					//错误的参数
-  SYS_ACTION = 4; 					//错误的action
-  SYS_NET_TIMEOUT = 5; 				//网络超时
+  SYS_UNMARSHAL = 3; 					//格式错误
+  SYS_PARAMETER = 4; 					//错误的参数
+  SYS_ACTION = 5; 					//错误的action
+//  SYS_NET_TIMEOUT = 5; 				//网络超时
   SYS_PLATFORM_INVALID = 6; 			//平台校验无效
-  SYS_ILLEGAL_REQUEST = 7; 			//非法请求
-  SYS_MAINTAIN = 8; 					//服务器维护中
-  SYS_MAX_ONLINE = 9; 				//最大在线人数
-  SYS_OTHER_LOGIN = 10;				//你已经下线，有其它人使用你的账号进行登录
-  SYS_SERVER_STOPPING = 11;			//停服中
-  SYS_INVALID_ACTIVATION = 12; 		//激活码无效
-  SYS_OUT_OF_TIME_RANG = 13;			//超出时间范围
-  SYS_NOT_AVAILABLE = 14;				//功能未开放
-  SYS_MAX_REGISTER = 15; 				//最大注册人数
-  SYS_FORCE_LOGOUT = 16;				//强制登出
-  SYS_PUSH_DATA_MSG = 17;				//格式化应答数据
-  SYS_TOO_FAST = 18;					//操作太快
-  SYS_LOGOUT_TIME = 19;				//太长时间未操作离线
-  SYS_REGISTER_CLOSED = 20;			//注册关闭
-  SYS_OLD_VERSION = 21;				//版本太旧请重新登录
-  SYS_INPUT_OUTOF = 22;				//输入越界
-  SYS_LOGIN_SIGN_EXPIRE = 23;			//书签过期
+//  SYS_ILLEGAL_REQUEST = 7; 			//非法请求
+//  SYS_MAINTAIN = 8; 					//服务器维护中
+//  SYS_MAX_ONLINE = 9; 				//最大在线人数
+//  SYS_OTHER_LOGIN = 10;				//你已经下线，有其它人使用你的账号进行登录
+//  SYS_SERVER_STOPPING = 11;			//停服中
+//  SYS_INVALID_ACTIVATION = 12; 		//激活码无效
+//  SYS_OUT_OF_TIME_RANG = 13;			//超出时间范围
+//  SYS_NOT_AVAILABLE = 14;				//功能未开放
+//  SYS_MAX_REGISTER = 15; 				//最大注册人数
+//  SYS_FORCE_LOGOUT = 16;				//强制登出
+//  SYS_PUSH_DATA_MSG = 17;				//格式化应答数据
+//  SYS_TOO_FAST = 18;					//操作太快
+//  SYS_LOGOUT_TIME = 19;				//太长时间未操作离线
+//  SYS_REGISTER_CLOSED = 20;			//注册关闭
+//  SYS_OLD_VERSION = 21;				//版本太旧请重新登录
+//  SYS_INPUT_OUTOF = 22;				//输入越界
+//  SYS_LOGIN_SIGN_EXPIRE = 23;			//书签过期
 
   // ----------------玩家相关错误码100-------------------------
   PLAYER_ERROR = 100;

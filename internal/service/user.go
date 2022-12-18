@@ -61,11 +61,11 @@ func (s *sUser) Login(ctx context.Context, in *model.UserLoginIn) (sessionId str
 	if userEntity == nil {
 		return sessionId, gerror.New(`账号或密码错误`)
 	}
-	r := g.RequestFromCtx(ctx)
-	if err = r.Session.Set(consts.UserSessionKey, userEntity); err != nil {
-		return
+	sessionId, err = Session().SetUser(ctx, userEntity)
+	if err != nil {
+		return "", err
 	}
-	sessionId = r.Session.MustId()
+	r := g.RequestFromCtx(ctx)
 	r.Cookie.SetHttpCookie(&http.Cookie{
 		Name:     r.Server.GetSessionIdName(),
 		Value:    sessionId,

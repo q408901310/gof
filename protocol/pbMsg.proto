@@ -3,13 +3,15 @@ syntax = "proto3";
 option go_package = "/internal/pb";
 
 import 'protocol/dataMsg.proto';
+import 'protocol/code.proto';
+import 'protocol/action.proto';
 
 package pb;
 message Msg{
 	string sessionId = 1; //请求的校验码
 	int32 sequence = 2; //请求序列(>0表示为客户端请求的命令 =0则为服务器端推送的命令)
-	string action = 3; //操作码id
-	int32 code = 4;//错误码(0表示没有错误,不为0则解析data域为ErrorMsg)
+	ACTION action = 3; //操作码id
+	CODE code = 4;//错误码(0表示没有错误,不为0则解析data域为ErrorMsg)
 	bytes data = 5; //提交或响应的数据
 	DataMsg dataMsg = 6; //服务器端推送数据
 	int32 version = 9;// 当前客户端版本号
