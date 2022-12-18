@@ -87,12 +87,12 @@ func (s *sWebsocket) Connect(ctx context.Context) (err error) {
 		//	continue
 		//}
 		//停服维护中 todo
-		g.Dump(act)
+		//g.Dump(act)
 		//act
 	}
 }
 
-func (s *sWebsocket) sendErrorMessage(c *client, action string, code pb.Code) {
+func (s *sWebsocket) sendErrorMessage(c *client, action pb.ACTION, code pb.CODE) {
 	build := Message().buildPBMsg(action, code)
 	msg, err := proto.Marshal(build)
 	if err != nil {

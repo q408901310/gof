@@ -1,0 +1,12 @@
+syntax = "proto3";
+// 错误码信息
+option go_package = "/internal/pb";
+
+package pb;
+
+enum ACTION{
+
+  PING = 0 ;
+  //-----------------登录相关----------------------------
+  LOGIN_ZONE = 1;
+}
