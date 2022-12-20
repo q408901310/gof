@@ -8,7 +8,7 @@ import (
 	"gof/internal/dao/internal"
 )
 
-// internalConfigGroupChannelDao is internal type for wrapping internal DAO implements.
+// internalConfigGroupChannelDao is custom type for wrapping custom DAO implements.
 type internalConfigGroupChannelDao = *internal.ConfigGroupChannelDao
 
 // configGroupChannelDao is the data access object for table config_group_channel.

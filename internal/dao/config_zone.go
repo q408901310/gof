@@ -8,7 +8,7 @@ import (
 	"gof/internal/dao/internal"
 )
 
-// internalConfigZoneDao is internal type for wrapping internal DAO implements.
+// internalConfigZoneDao is custom type for wrapping custom DAO implements.
 type internalConfigZoneDao = *internal.ConfigZoneDao
 
 // configZoneDao is the data access object for table config_zone.

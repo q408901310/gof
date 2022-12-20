@@ -8,7 +8,7 @@ import (
 	"gof/internal/dao/internal"
 )
 
-// internalUserDao is internal type for wrapping internal DAO implements.
+// internalUserDao is custom type for wrapping custom DAO implements.
 type internalUserDao = *internal.UserDao
 
 // userDao is the data access object for table user.

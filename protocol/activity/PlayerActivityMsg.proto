@@ -1,6 +1,6 @@
 syntax = "proto3";
 // 礼包
-option go_package = "/internal/pb";
+option go_package = "/custom/pb";
 
 import "protocol/activity/ActivityEverydaySignMsg.proto";
 import "protocol/activity/ActivityFirstRechargeMsg.proto";

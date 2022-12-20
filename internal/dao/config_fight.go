@@ -8,7 +8,7 @@ import (
 	"gof/internal/dao/internal"
 )
 
-// internalConfigFightDao is internal type for wrapping internal DAO implements.
+// internalConfigFightDao is custom type for wrapping custom DAO implements.
 type internalConfigFightDao = *internal.ConfigFightDao
 
 // configFightDao is the data access object for table config_fight.

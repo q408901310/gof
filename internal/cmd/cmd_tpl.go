@@ -88,9 +88,9 @@ func (c cTpl) Index(ctx context.Context, in cTplInput) (out *cTplOutput, err err
 	var (
 		name     = gstr.CaseSnake(in.Name)
 		rootPath = gfile.Pwd()
-		cFile    = gfile.Join(rootPath, "internal/controller/", name+".go")
-		sFile    = gfile.Join(rootPath, "internal/service/", name+".go")
-		mFile    = gfile.Join(rootPath, "internal/model/", name+".go")
+		cFile    = gfile.Join(rootPath, "custom/controller/", name+".go")
+		sFile    = gfile.Join(rootPath, "custom/service/", name+".go")
+		mFile    = gfile.Join(rootPath, "custom/model/", name+".go")
 	)
 
 	if in.Controller {
@@ -103,7 +103,7 @@ func (c cTpl) Index(ctx context.Context, in cTplInput) (out *cTplOutput, err err
 		}
 		err := gfile.PutContents(cFile, gstr.Replace(cTplController, "${name}", gstr.UcFirst(name)))
 		if err != nil {
-			g.Dump(cFile + " create error")
+			g.Dump(cFile + " create merror")
 			return nil, err
 		}
 		g.Dump(cFile + " ok")
@@ -120,7 +120,7 @@ SERVICE:
 		}
 		err := gfile.PutContents(sFile, gstr.Replace(cTplService, "${name}", gstr.UcFirst(name)))
 		if err != nil {
-			g.Dump(sFile + " create error")
+			g.Dump(sFile + " create merror")
 			return nil, err
 		}
 		g.Dump(sFile + " ok")
@@ -136,7 +136,7 @@ MODEL:
 		}
 		err := gfile.PutContents(mFile, gstr.Replace(cTplModel, "${name}", gstr.UcFirst(name)))
 		if err != nil {
-			g.Dump(mFile + " create error")
+			g.Dump(mFile + " create merror")
 			return nil, err
 		}
 		g.Dump(mFile + " ok")

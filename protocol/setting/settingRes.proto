@@ -1,6 +1,6 @@
 syntax = "proto3";
 // 设置
-option go_package = "/internal/pb";
+option go_package = "/custom/pb";
 
 package pb.setting;
 message SettingRes{

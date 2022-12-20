@@ -12,19 +12,14 @@ var (
 	}
 )
 
-func Run(ctx g.Ctx, key pb.ACTION, params ...interface{}) error {
+func Run(ctx g.Ctx, key pb.ACTION, data *pb.DataMsg) {
 	action, ok := actionMap[key]
 	if !ok {
-		return nil
+		return
 	}
 	in := []reflect.Value{
 		reflect.ValueOf(ctx),
-	}
-	if len(params) > 0 {
-		for _, param := range params {
-			in = append(in, reflect.ValueOf(param))
-		}
+		reflect.ValueOf(data),
 	}
 	action.Call(in)
-	return nil
 }

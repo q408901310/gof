@@ -1,6 +1,6 @@
 syntax = "proto3";
 // 首充奖励
-option go_package="/internal/pb";
+option go_package="/custom/pb";
 package pb.activity;
 message ActivityEverydaySignMsg{
 

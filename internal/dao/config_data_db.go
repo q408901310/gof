@@ -8,7 +8,7 @@ import (
 	"gof/internal/dao/internal"
 )
 
-// internalConfigDataDbDao is internal type for wrapping internal DAO implements.
+// internalConfigDataDbDao is custom type for wrapping custom DAO implements.
 type internalConfigDataDbDao = *internal.ConfigDataDbDao
 
 // configDataDbDao is the data access object for table config_data_db.

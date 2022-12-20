@@ -1,6 +1,6 @@
 module gof
 
-go 1.19
+go 1.18
 
 require (
 	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.1.4

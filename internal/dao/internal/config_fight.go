@@ -71,7 +71,7 @@ func (dao *ConfigFightDao) Ctx(ctx context.Context) *gdb.Model {
 }
 
 // Transaction wraps the transaction logic using function f.
-// It rollbacks the transaction and returns the error from function f if it returns non-nil error.
+// It rollbacks the transaction and returns the merror from function f if it returns non-nil merror.
 // It commits the transaction and returns nil if function f returns nil.
 //
 // Note that, you should not Commit or Rollback the transaction in function f
