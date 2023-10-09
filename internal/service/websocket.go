@@ -7,8 +7,8 @@ import (
 	"github.com/gogf/gf/v2/os/grpool"
 	"github.com/gogo/protobuf/proto"
 	"gof/internal/action"
-	"gof/internal/model"
 	"gof/internal/model/custom/merror"
+	"gof/internal/module"
 	"gof/internal/pb"
 
 	"github.com/gogf/gf/v2/container/gmap"
@@ -54,7 +54,7 @@ func (s *sWebsocket) Connect(ctx context.Context) (err error) {
 	if user == nil {
 		return gerror.New("请先登录")
 	}
-	c := model.NewClient(ws, user.Id)
+	c := module.NewClient(ws, user.Id)
 	err = s.AddClient(c)
 	if err != nil {
 		return
@@ -88,7 +88,7 @@ func (s *sWebsocket) Connect(ctx context.Context) (err error) {
 	}
 }
 
-func (s *sWebsocket) AddClient(c *model.Client) error {
+func (s *sWebsocket) AddClient(c *module.Client) error {
 	if s.Close {
 		//return gerror.New("维护中")
 		return merror.New("维护中")
@@ -98,7 +98,7 @@ func (s *sWebsocket) AddClient(c *model.Client) error {
 	return nil
 }
 
-func (s *sWebsocket) CloseClient(c *model.Client) {
+func (s *sWebsocket) CloseClient(c *module.Client) {
 	s.clientMap.Remove(c.Uid)
 	err := c.Close()
 	if err != nil {
@@ -109,7 +109,7 @@ func (s *sWebsocket) CloseClient(c *model.Client) {
 func (s *sWebsocket) CloseAllClient() {
 	s.Close = true
 	s.clientMap.Iterator(func(uid interface{}, c interface{}) bool {
-		err := c.(*model.Client).Close()
+		err := c.(*module.Client).Close()
 		return err == nil
 	})
 	s.clientMap.Clear()

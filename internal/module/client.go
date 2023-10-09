@@ -1,11 +1,10 @@
-package model
+package module
 
 import (
 	"context"
 	"github.com/gogf/gf/v2/net/ghttp"
 	"github.com/golang/protobuf/proto"
 	"gof/internal/pb"
-	"gof/internal/service"
 )
 
 type Client struct {
@@ -26,7 +25,11 @@ func NewClient(ws *ghttp.WebSocket, uid uint) *Client {
 }
 
 func (c *Client) SendErrorMessage(action pb.ACTION, code pb.CODE) {
-	build := service.Message().BuildPBMsg(action, code)
+	build := &pb.Msg{
+		Sequence: 0,
+		Action:   action,
+		Code:     code,
+	}
 	msg, err := proto.Marshal(build)
 	if err != nil {
 		return
