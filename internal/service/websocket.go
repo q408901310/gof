@@ -50,8 +50,8 @@ func (s *sWebsocket) Connect(ctx context.Context) (err error) {
 		return
 	}
 	sessionId := r.GetHeader("sessionId")
-	user := Session().GetUserBySessionId(ctx, sessionId)
-	if user == nil {
+	user, err := User().GetUserByToken(ctx, sessionId)
+	if err != nil || user == nil {
 		return gerror.New("请先登录")
 	}
 	c := module.NewClient(ws, user.Id)

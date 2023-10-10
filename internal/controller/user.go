@@ -43,3 +43,8 @@ func (c *cUser) Guest(ctx context.Context, req *v1.UserGuestReq) (res *v1.UserGu
 	err = service.User().Guest(ctx)
 	return
 }
+
+func (c *cUser) Sever(ctx context.Context, req *v1.UserServerReq) (res *v1.UserServerRes, err error) {
+	err = service.User().Server(ctx, req.Server)
+	return
+}

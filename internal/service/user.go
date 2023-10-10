@@ -61,11 +61,16 @@ func (s *sUser) Login(ctx context.Context, in *model.UserLoginIn) (sessionId str
 	if userEntity == nil {
 		return sessionId, gerror.New(`账号或密码错误`)
 	}
-	sessionId, err = Session().SetUser(ctx, userEntity)
+	//sessionId, err = Session().SetUser(ctx, userEntity)
+	//if err != nil {
+	//	return "", err
+	//}
+	r := g.RequestFromCtx(ctx)
+	sessionId = r.Session.MustId()
+	_, err = dao.User.Ctx(ctx).Update(g.Map{"token": sessionId}, "passport", in.Passport)
 	if err != nil {
 		return "", err
 	}
-	r := g.RequestFromCtx(ctx)
 	r.Cookie.SetHttpCookie(&http.Cookie{
 		Name:     r.Server.GetSessionIdName(),
 		Value:    sessionId,
@@ -88,6 +93,18 @@ func (s *sUser) Guest(ctx context.Context) (err error) {
 	return
 }
 
+func (s *sUser) Server(ctx context.Context, server uint) error {
+	row, err := dao.Server.Ctx(ctx).One("id", server)
+	if err != nil {
+		return gerror.New("区服不存在")
+	}
+	if row.IsEmpty() {
+		return gerror.New("区服不存在")
+	}
+	//TODO 区服状态和人数判断
+	return nil
+}
+
 func (s *sUser) GetUser(ctx context.Context) (user *entity.User) {
 	r := g.RequestFromCtx(ctx)
 	v, err := r.Session.Get(consts.UserSessionKey)
@@ -106,6 +123,14 @@ func (s *sUser) GetUserByPassportAndPassword(ctx context.Context, passport, pass
 	err = dao.User.Ctx(ctx).Where(g.Map{
 		dao.User.Columns().Passport: passport,
 		dao.User.Columns().Password: password,
+	}).Scan(&user)
+	return
+}
+
+// GetUserByToken 根据token查询用户信息，一般用于验证账号是否已登录。
+func (s *sUser) GetUserByToken(ctx context.Context, token string) (user *entity.User, err error) {
+	err = dao.User.Ctx(ctx).Where(g.Map{
+		"token": token,
 	}).Scan(&user)
 	return
 }

@@ -36,7 +36,7 @@ type UserGuestRes struct {
 
 type UserServerReq struct {
 	g.Meta `path:"/user/login" tags:"用户" method:"post" summary:"选择区服"`
-	Server string `json:"server"`
+	Server uint `json:"server"`
 }
 
 type UserServerRes struct {
