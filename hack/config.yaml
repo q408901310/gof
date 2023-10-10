@@ -3,12 +3,13 @@
 # https://goframe.org/pages/viewpage.action?pageId=3673173
 gfcli:
   build:
-    name: "main"
-#    path: "./bin"
-#    arch: "amd64"
-#    system: "linux"
-    packSrc: "hack,manifest/config"
+    name: "gof"
+    path: "bin"
+    arch: "amd64"
+    system: "linux"
+    packSrc: "resource,manifest"
 
 database:
   default:
-    link: "mysql:root:@tcp(127.0.0.1:3306)/mgxx_server"
+    - link: "mysql:root:@tcp(192.168.51.229:3306)/gof"
+      jsonCase: "Snake"

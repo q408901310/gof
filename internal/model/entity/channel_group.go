@@ -4,8 +4,9 @@
 
 package entity
 
-// ConfigGroup is the golang structure for table config_group.
-type ConfigGroup struct {
-	GroupId   int    `json:"groupId"   ` //
-	GroupName string `json:"groupName" ` //
+// ChannelGroup is the golang structure for table channel_group.
+type ChannelGroup struct {
+	Id      uint   `json:"id"      ` //
+	Channel string `json:"channel" ` //
+	Group   uint   `json:"group"   ` //
 }

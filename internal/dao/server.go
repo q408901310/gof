@@ -8,19 +8,19 @@ import (
 	"gof/internal/dao/internal"
 )
 
-// internalConfigResDbDao is custom type for wrapping custom DAO implements.
-type internalConfigResDbDao = *internal.ConfigResDbDao
+// internalServerDao is internal type for wrapping internal DAO implements.
+type internalServerDao = *internal.ServerDao
 
-// configResDbDao is the data access object for table config_res_db.
+// serverDao is the data access object for table server.
 // You can define custom methods on it to extend its functionality as you wish.
-type configResDbDao struct {
-	internalConfigResDbDao
+type serverDao struct {
+	internalServerDao
 }
 
 var (
-	// ConfigResDb is globally public accessible object for table config_res_db operations.
-	ConfigResDb = configResDbDao{
-		internal.NewConfigResDbDao(),
+	// Server is globally public accessible object for table server operations.
+	Server = serverDao{
+		internal.NewServerDao(),
 	}
 )
 

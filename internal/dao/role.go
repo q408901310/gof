@@ -8,19 +8,19 @@ import (
 	"gof/internal/dao/internal"
 )
 
-// internalConfigZoneDao is custom type for wrapping custom DAO implements.
-type internalConfigZoneDao = *internal.ConfigZoneDao
+// internalRoleDao is internal type for wrapping internal DAO implements.
+type internalRoleDao = *internal.RoleDao
 
-// configZoneDao is the data access object for table config_zone.
+// roleDao is the data access object for table role.
 // You can define custom methods on it to extend its functionality as you wish.
-type configZoneDao struct {
-	internalConfigZoneDao
+type roleDao struct {
+	internalRoleDao
 }
 
 var (
-	// ConfigZone is globally public accessible object for table config_zone operations.
-	ConfigZone = configZoneDao{
-		internal.NewConfigZoneDao(),
+	// Role is globally public accessible object for table role operations.
+	Role = roleDao{
+		internal.NewRoleDao(),
 	}
 )
 

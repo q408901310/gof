@@ -9,18 +9,14 @@ import (
 	"github.com/gogf/gf/v2/os/gtime"
 )
 
-// User is the golang structure of table user for DAO operations like Where/Data.
-type User struct {
-	g.Meta    `orm:"table:user, do:true"`
+// Role is the golang structure of table role for DAO operations like Where/Data.
+type Role struct {
+	g.Meta    `orm:"table:role, do:true"`
 	Id        interface{} //
-	Passport  interface{} //
-	Password  interface{} //
+	Uid       interface{} //
+	Sid       interface{} //
 	Name      interface{} //
 	Avatart   interface{} //
-	RoleIds   interface{} //
-	Email     interface{} //
-	Phone     interface{} //
-	Channel   interface{} //
 	CreatedAt *gtime.Time //
 	UpdatedAt *gtime.Time //
 	DeletedAt *gtime.Time //

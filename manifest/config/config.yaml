@@ -15,7 +15,7 @@ logger:
 
 database:
   default:
-   - link: "mysql:root:@tcp(127.0.0.1:3306)/mgxx_server"
+   - link: "mysql:root:@tcp(127.0.0.1:3306)/gof"
 
 
 

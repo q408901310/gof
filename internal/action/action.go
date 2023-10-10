@@ -8,7 +8,7 @@ import (
 
 var (
 	actionMap = map[pb.ACTION]reflect.Value{
-		pb.ACTION_LOGIN_ZONE: reflect.ValueOf(Login.zone),
+		pb.ACTION_LOGIN_ZONE: reflect.ValueOf(Login.start),
 	}
 )
 

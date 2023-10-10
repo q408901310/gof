@@ -32,7 +32,7 @@ func (s *sUser) Register(ctx context.Context, in *model.UserRegisterIn) error {
 	if in.Confirm != in.Password {
 		return gerror.New("两次密码不同")
 	}
-	return dao.User.Transaction(ctx, func(ctx context.Context, tx *gdb.TX) error {
+	return dao.User.Transaction(ctx, func(ctx context.Context, tx gdb.TX) error {
 		var user *entity.User
 		if err := gconv.Struct(in, &user); err != nil {
 			return err
@@ -40,7 +40,7 @@ func (s *sUser) Register(ctx context.Context, in *model.UserRegisterIn) error {
 		if err := s.CheckPassportUnique(ctx, user.Passport); err != nil {
 			return err
 		}
-		if err := s.CheckNicknameUnique(ctx, user.Nickname); err != nil {
+		if err := s.CheckNicknameUnique(ctx, user.Name); err != nil {
 			return err
 		}
 		user.Password = s.EncryptPassword(user.Password)
@@ -124,7 +124,7 @@ func (s *sUser) CheckPassportUnique(ctx context.Context, passport string) error 
 
 // CheckNicknameUnique 检测给定的昵称是否唯一
 func (s *sUser) CheckNicknameUnique(ctx context.Context, nickname string) error {
-	n, err := dao.User.Ctx(ctx).Where(dao.User.Columns().Nickname, nickname).Count()
+	n, err := dao.User.Ctx(ctx).Where(dao.User.Columns().Name, nickname).Count()
 	if err != nil {
 		return err
 	}

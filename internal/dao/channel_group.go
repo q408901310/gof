@@ -8,19 +8,19 @@ import (
 	"gof/internal/dao/internal"
 )
 
-// internalConfigFightDao is custom type for wrapping custom DAO implements.
-type internalConfigFightDao = *internal.ConfigFightDao
+// internalChannelGroupDao is internal type for wrapping internal DAO implements.
+type internalChannelGroupDao = *internal.ChannelGroupDao
 
-// configFightDao is the data access object for table config_fight.
+// channelGroupDao is the data access object for table channel_group.
 // You can define custom methods on it to extend its functionality as you wish.
-type configFightDao struct {
-	internalConfigFightDao
+type channelGroupDao struct {
+	internalChannelGroupDao
 }
 
 var (
-	// ConfigFight is globally public accessible object for table config_fight operations.
-	ConfigFight = configFightDao{
-		internal.NewConfigFightDao(),
+	// ChannelGroup is globally public accessible object for table channel_group operations.
+	ChannelGroup = channelGroupDao{
+		internal.NewChannelGroupDao(),
 	}
 )
 

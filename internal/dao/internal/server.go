@@ -11,76 +11,82 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 )
 
-// UserDao is the data access object for table user.
-type UserDao struct {
-	table   string      // table is the underlying table name of the DAO.
-	group   string      // group is the database configuration group name of current DAO.
-	columns UserColumns // columns contains all the column names of Table for convenient usage.
+// ServerDao is the data access object for table server.
+type ServerDao struct {
+	table   string        // table is the underlying table name of the DAO.
+	group   string        // group is the database configuration group name of current DAO.
+	columns ServerColumns // columns contains all the column names of Table for convenient usage.
 }
 
-// UserColumns defines and stores column names for table user.
-type UserColumns struct {
+// ServerColumns defines and stores column names for table server.
+type ServerColumns struct {
 	Id        string //
-	Passport  string //
-	Password  string //
+	Group     string //
 	Name      string //
-	Avatart   string //
-	RoleIds   string //
-	Email     string //
-	Phone     string //
-	Channel   string //
+	Ip        string //
+	Http      string //
+	Socket    string //
+	MaxReg    string //
+	MaxOnline string //
+	Status    string //
+	Hot       string //
+	Sort      string //
+	Open      string //
 	CreatedAt string //
 	UpdatedAt string //
 	DeletedAt string //
 }
 
-// userColumns holds the columns for table user.
-var userColumns = UserColumns{
+// serverColumns holds the columns for table server.
+var serverColumns = ServerColumns{
 	Id:        "id",
-	Passport:  "passport",
-	Password:  "password",
+	Group:     "group",
 	Name:      "name",
-	Avatart:   "avatart",
-	RoleIds:   "role_ids",
-	Email:     "email",
-	Phone:     "phone",
-	Channel:   "channel",
+	Ip:        "ip",
+	Http:      "http",
+	Socket:    "socket",
+	MaxReg:    "max_reg",
+	MaxOnline: "max_online",
+	Status:    "status",
+	Hot:       "hot",
+	Sort:      "sort",
+	Open:      "open",
 	CreatedAt: "created_at",
 	UpdatedAt: "updated_at",
 	DeletedAt: "deleted_at",
 }
 
-// NewUserDao creates and returns a new DAO object for table data access.
-func NewUserDao() *UserDao {
-	return &UserDao{
+// NewServerDao creates and returns a new DAO object for table data access.
+func NewServerDao() *ServerDao {
+	return &ServerDao{
 		group:   "default",
-		table:   "user",
-		columns: userColumns,
+		table:   "server",
+		columns: serverColumns,
 	}
 }
 
 // DB retrieves and returns the underlying raw database management object of current DAO.
-func (dao *UserDao) DB() gdb.DB {
+func (dao *ServerDao) DB() gdb.DB {
 	return g.DB(dao.group)
 }
 
 // Table returns the table name of current dao.
-func (dao *UserDao) Table() string {
+func (dao *ServerDao) Table() string {
 	return dao.table
 }
 
 // Columns returns all column names of current dao.
-func (dao *UserDao) Columns() UserColumns {
+func (dao *ServerDao) Columns() ServerColumns {
 	return dao.columns
 }
 
 // Group returns the configuration group name of database of current dao.
-func (dao *UserDao) Group() string {
+func (dao *ServerDao) Group() string {
 	return dao.group
 }
 
 // Ctx creates and returns the Model for current DAO, It automatically sets the context for current operation.
-func (dao *UserDao) Ctx(ctx context.Context) *gdb.Model {
+func (dao *ServerDao) Ctx(ctx context.Context) *gdb.Model {
 	return dao.DB().Model(dao.table).Safe().Ctx(ctx)
 }
 
@@ -90,6 +96,6 @@ func (dao *UserDao) Ctx(ctx context.Context) *gdb.Model {
 //
 // Note that, you should not Commit or Rollback the transaction in function f
 // as it is automatically handled by this function.
-func (dao *UserDao) Transaction(ctx context.Context, f func(ctx context.Context, tx gdb.TX) error) (err error) {
+func (dao *ServerDao) Transaction(ctx context.Context, f func(ctx context.Context, tx gdb.TX) error) (err error) {
 	return dao.Ctx(ctx).Transaction(ctx, f)
 }

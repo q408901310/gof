@@ -8,10 +8,10 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 )
 
-// ConfigChannel is the golang structure of table config_channel for DAO operations like Where/Data.
-type ConfigChannel struct {
-	g.Meta      `orm:"table:config_channel, do:true"`
-	ChannelId   interface{} //
-	ChannelName interface{} // 渠道名称
-	Version     interface{} //
+// ChannelGroup is the golang structure of table channel_group for DAO operations like Where/Data.
+type ChannelGroup struct {
+	g.Meta  `orm:"table:channel_group, do:true"`
+	Id      interface{} //
+	Channel interface{} //
+	Group   interface{} //
 }

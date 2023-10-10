@@ -18,7 +18,7 @@ func Context() *sContext {
 	return &insContext
 }
 
-// InitAction 初始化上下文对象指针到上下文对象中，以便后续的请求流程中可以修改。
+// InitAction 初始化上下文，并将链接对象保存到上下文中，以便后续流程中使用。
 func (s *sContext) InitAction(parent context.Context, c *module.Client) (ctx context.Context, cancel context.CancelFunc) {
 	ctx = context.WithValue(parent, consts.ContextClient, c)
 	ctx, cancel = context.WithCancel(ctx)
