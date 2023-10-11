@@ -49,10 +49,17 @@ func (s *sWebsocket) Connect(ctx context.Context) (err error) {
 		g.Log().Error(ctx, err)
 		return
 	}
-	sessionId := r.GetHeader("sessionId")
-	user, err := User().GetUserByToken(ctx, sessionId)
-	if err != nil || user == nil {
+	token := r.Cookie.Get("token").String()
+	if token == "" {
 		return gerror.New("请先登录")
+	}
+	user, err := User().GetUserByToken(ctx, token)
+	if err != nil || user == nil {
+		return gerror.New("登录状态已消失，请重新登录")
+	}
+	server := r.Cookie.Get("server").String()
+	if server == "" {
+		return gerror.New("请先选择区服")
 	}
 	c := module.NewClient(ws, user.Id)
 	err = s.AddClient(c)
@@ -96,6 +103,20 @@ func (s *sWebsocket) AddClient(c *module.Client) error {
 	// Create session data for current websocket.
 	s.clientMap.Set(c.Uid, c)
 	return nil
+}
+
+// GetClient 根据uid获取Client对象
+func (s *sWebsocket) GetClient(uid uint) *module.Client {
+	client := s.clientMap.Get(uid)
+	if client == nil {
+		return nil
+	}
+	c, ok := client.(*module.Client)
+	if ok {
+		return c
+	} else {
+		return nil
+	}
 }
 
 func (s *sWebsocket) CloseClient(c *module.Client) {

@@ -10,17 +10,15 @@ import (
 type Client struct {
 	ws        *ghttp.WebSocket
 	Uid       uint
-	PlayerId  int
 	MsgType   int
 	CtxCancel context.CancelFunc
 }
 
 func NewClient(ws *ghttp.WebSocket, uid uint) *Client {
 	return &Client{
-		ws:       ws,
-		Uid:      uid,
-		PlayerId: 0,
-		MsgType:  0,
+		ws:      ws,
+		Uid:     uid,
+		MsgType: 0,
 	}
 }
 

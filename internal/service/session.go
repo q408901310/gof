@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/gogf/gf/v2/frame/g"
 	"gof/internal/consts"
+	"gof/internal/model"
 	"gof/internal/model/entity"
 )
 
@@ -26,12 +27,11 @@ func Session() *sSession {
 }
 
 // 设置用户Session.
-func (s *sSession) SetUser(ctx context.Context, user *entity.User) (sessionId string, err error) {
+func (s *sSession) SetUser(ctx context.Context, user *model.SessionUser) (err error) {
 	r := g.RequestFromCtx(ctx)
 	if err = r.Session.Set(consts.UserSessionKey, user); err != nil {
 		return
 	}
-	sessionId = r.Session.MustId()
 	return
 }
 

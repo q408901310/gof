@@ -28,7 +28,7 @@ CREATE TABLE `user` (
                         `passport` varchar(32) NOT NULL,
                         `password` varchar(32) NOT NULL,
                         `name` varchar(128) NOT NULL,
-                        `avatart` varchar(256) NOT NULL,
+                        `avatar` varchar(256) NOT NULL,
                         `role_ids` varchar(1024) NOT NULL,
                         `email` varchar(128) NOT NULL,
                         `phone` varchar(32) NOT NULL,
@@ -36,18 +36,7 @@ CREATE TABLE `user` (
                         `created_at` datetime DEFAULT NULL,
                         `updated_at` datetime DEFAULT NULL,
                         `deleted_at` datetime DEFAULT NULL,
+                        `token` varchar(100) NOT NULL,
                         PRIMARY KEY (`id`),
                         UNIQUE KEY `user_uk` (`passport`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-CREATE TABLE `role` (
-                        `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-                        `uid` int(10) unsigned NOT NULL,
-                        `sid` int(10) unsigned NOT NULL,
-                        `name` varchar(128) NOT NULL,
-                        `avatart` varchar(256) NOT NULL,
-                        `created_at` datetime DEFAULT NULL,
-                        `updated_at` datetime DEFAULT NULL,
-                        `deleted_at` datetime DEFAULT NULL,
-                        PRIMARY KEY (`id`),
-                        UNIQUE KEY `role_uk` (`uid`,`sid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

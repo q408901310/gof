@@ -1,6 +1,8 @@
 package service
 
 import (
+	"context"
+	"gof/internal/dao"
 	"net/http"
 
 	"github.com/gogf/gf/v2/frame/g"
@@ -34,8 +36,12 @@ func (s *sMiddleware) Debug(r *ghttp.Request) {
 
 // Auth 前台系统权限控制，用户必须登录才能访问
 func (s *sMiddleware) Auth(r *ghttp.Request) {
-	user := User().GetUser(r.Context())
-	if user.Id == 0 {
+	token := r.Cookie.Get("token").String()
+	user, err := dao.User.Ctx(context.Background()).One("token", token)
+	if err != nil {
+		return
+	}
+	if user == nil {
 		r.Response.WriteJsonExit(http.StatusNotFound)
 	}
 	r.Middleware.Next()

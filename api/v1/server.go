@@ -12,3 +12,11 @@ type ServerListReq struct {
 type ServerListRes struct {
 	List []*model.ServerListItem `json:"list"`
 }
+
+type ServerChooseReq struct {
+	g.Meta `path:"/user/login" tags:"用户" method:"post" summary:"选择区服"`
+	Server uint `json:"server"`
+}
+
+type ServerChooseRes struct {
+}

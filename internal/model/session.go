@@ -5,3 +5,9 @@ type SessionNotice struct {
 	Type    string // 消息类型
 	Content string // 消息内容
 }
+
+type SessionUser struct {
+	UserId   uint `json:"user_id"`
+	ServerId uint `json:"server_id"`
+	RoleId   uint `json:"role_id"`
+}

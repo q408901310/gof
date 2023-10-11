@@ -2,10 +2,13 @@ package service
 
 import (
 	"context"
+	"github.com/gogf/gf/v2/errors/gerror"
+	"github.com/gogf/gf/v2/frame/g"
 	"gof/internal/dao"
 	"gof/internal/model"
 	"gof/internal/model/entity"
 	"sort"
+	"strconv"
 )
 
 type (
@@ -44,4 +47,16 @@ func (s sServer) List(ctx context.Context) (out []*model.ServerListItem, err err
 		})
 	}
 	return
+}
+
+func (s sServer) Choose(ctx context.Context, serverId uint) (err error) {
+	var server *entity.Server
+	err = dao.Server.Ctx(ctx).Where("id", serverId).Scan(&server)
+	if err != nil || server.Id == 0 {
+		return gerror.New("区服不存在")
+	}
+	r := g.RequestFromCtx(ctx)
+	r.Cookie.SetCookie("server", strconv.Itoa(int(server.Id)), "", "/", 0)
+	//TODO 区服状态和人数判断
+	return nil
 }

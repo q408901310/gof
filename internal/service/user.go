@@ -2,11 +2,12 @@ package service
 
 import (
 	"context"
+	"fmt"
 	"gof/internal/consts"
 	"gof/internal/dao"
 	"gof/internal/model"
 	"gof/internal/model/entity"
-	"net/http"
+	"time"
 
 	"github.com/gogf/gf/v2/frame/g"
 
@@ -49,7 +50,7 @@ func (s *sUser) Register(ctx context.Context, in *model.UserRegisterIn) error {
 	})
 }
 
-func (s *sUser) Login(ctx context.Context, in *model.UserLoginIn) (sessionId string, err error) {
+func (s *sUser) Login(ctx context.Context, in *model.UserLoginIn) (err error) {
 	userEntity, err := s.GetUserByPassportAndPassword(
 		ctx,
 		in.Passport,
@@ -59,24 +60,29 @@ func (s *sUser) Login(ctx context.Context, in *model.UserLoginIn) (sessionId str
 		return
 	}
 	if userEntity == nil {
-		return sessionId, gerror.New(`账号或密码错误`)
+		return gerror.New(`账号或密码错误`)
 	}
-	//sessionId, err = Session().SetUser(ctx, userEntity)
-	//if err != nil {
-	//	return "", err
-	//}
-	r := g.RequestFromCtx(ctx)
-	sessionId = r.Session.MustId()
-	_, err = dao.User.Ctx(ctx).Update(g.Map{"token": sessionId}, "passport", in.Passport)
 	if err != nil {
-		return "", err
+		return err
 	}
-	r.Cookie.SetHttpCookie(&http.Cookie{
-		Name:     r.Server.GetSessionIdName(),
-		Value:    sessionId,
-		Secure:   true,
-		SameSite: http.SameSiteNoneMode, // 自定义SameSite，配合secure一起使用
-	})
+	token := gmd5.MustEncrypt(fmt.Sprintf("%d,%d", userEntity.Id, time.Now().UnixNano()))
+	_, err = dao.User.Ctx(ctx).Update(g.Map{"token": token}, "passport", in.Passport)
+	if err != nil {
+		return err
+	}
+	//TODO 顶掉其他已连接账号
+	client := Websocket().GetClient(userEntity.Id)
+	if client != nil {
+		Websocket().CloseClient(client)
+	}
+	r := g.RequestFromCtx(ctx)
+	r.Cookie.SetCookie("token", token, "", "/", 604800)
+	//r.Cookie.SetHttpCookie(&http.Cookie{
+	//	Name:     "token",
+	//	Value:    token,
+	//	Secure:   true,
+	//	SameSite: http.SameSiteNoneMode, // 自定义SameSite，配合secure一起使用
+	//})
 	return
 }
 
@@ -91,18 +97,6 @@ func (s *sUser) Guest(ctx context.Context) (err error) {
 		g.Dump(user)
 	}
 	return
-}
-
-func (s *sUser) Server(ctx context.Context, server uint) error {
-	row, err := dao.Server.Ctx(ctx).One("id", server)
-	if err != nil {
-		return gerror.New("区服不存在")
-	}
-	if row.IsEmpty() {
-		return gerror.New("区服不存在")
-	}
-	//TODO 区服状态和人数判断
-	return nil
 }
 
 func (s *sUser) GetUser(ctx context.Context) (user *entity.User) {

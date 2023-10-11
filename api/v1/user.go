@@ -12,8 +12,7 @@ type UserLoginReq struct {
 }
 
 type UserLoginRes struct {
-	SessionId string                  `json:"sessionId"`
-	List      []*model.ServerListItem `json:"list"`
+	List []*model.ServerListItem `json:"list"`
 }
 
 type UserRegisterReq struct {
@@ -32,12 +31,4 @@ type UserGuestReq struct {
 }
 
 type UserGuestRes struct {
-}
-
-type UserServerReq struct {
-	g.Meta `path:"/user/login" tags:"用户" method:"post" summary:"选择区服"`
-	Server uint `json:"server"`
-}
-
-type UserServerRes struct {
 }
